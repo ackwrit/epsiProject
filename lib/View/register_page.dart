@@ -34,6 +34,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   Widget BodyPage(){
-    return const Text("Page Inscription");
+    return  Text("Page Inscription");
   }
 }
