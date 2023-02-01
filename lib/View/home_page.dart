@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projectepsi/Controller/Background_controller.dart';
+import 'package:projectepsi/Controller/MyAnimationController.dart';
+import 'package:projectepsi/View/dashboard_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,13 +18,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body : Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-            child: BodyPage()
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.amber,
+
+      body : Stack(
+          children: [
+            const BackgroundController(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                  child: BodyPage()
+              ),
+            ),
+          ],
         ),
-      )
+
     );
 
   }
@@ -32,9 +47,12 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children:[
         //Logo Circulaire
-        const CircleAvatar(
-          radius: 70,
-          backgroundImage:AssetImage("assets/splatoon.jpg"),
+        MyAnimation(
+          duration: 1000,
+          child: const CircleAvatar(
+            radius: 70,
+            backgroundImage:AssetImage("assets/splatoon.jpg"),
+          ),
         ),
 
         const SizedBox(height: 10,),
@@ -42,58 +60,73 @@ class _HomePageState extends State<HomePage> {
 
         // 2 TexField
 
-        TextField(
-          controller: mailController,
-          decoration: InputDecoration(
-            hintText: "Entrer votre mail",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10)
-            )
-          ),
+        MyAnimation(
+          duration: 2000,
+          child: TextField(
+            controller: mailController,
 
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "Entrer votre mail",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10)
+              )
+            ),
+
+          ),
         ),
 
         const SizedBox(height: 10,),
-        TextField(
-            obscureText: true,
-          controller: passwordController,
-          decoration: InputDecoration(
-              hintText: "Entrer votre password",
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10)
-              )
+        MyAnimation(
+          duration: 3000,
+          child: TextField(
+              obscureText: true,
+            controller: passwordController,
+            decoration: InputDecoration(
+                hintText: "Entrer votre password",
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                )
+            ),
           ),
         ),
         const SizedBox(height: 10,),
         
         //2 Boutons
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: const StadiumBorder()
-              ),
-                onPressed: (){
-
-                },
-                child: const Text("Inscription")
-            ),
-            const SizedBox(width: 10,),
-
-
-            ElevatedButton(
+        MyAnimation(
+          duration: 4000,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    shape: const StadiumBorder()
+                  shape: const StadiumBorder()
                 ),
-                onPressed: (){
+                  onPressed: (){
+
+                  },
+                  child: const Text("Inscription")
+              ),
+              const SizedBox(width: 10,),
 
 
-                },
-                child: const Text("Connexion")
-            ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder()
+                  ),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DashBoard()));
 
-          ],
+
+                  },
+                  child: const Text("Connexion")
+              ),
+
+            ],
+          ),
         ),
         
 

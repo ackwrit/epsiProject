@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
 
       ),
       darkTheme: ThemeData(
-        primaryColor: Colors.orangeAccent
+        primarySwatch: Colors.deepPurple ,
+
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
