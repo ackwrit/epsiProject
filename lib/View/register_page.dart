@@ -9,6 +9,31 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  //variable
+
+  TextEditingController mail = TextEditingController();
+  TextEditingController prenom = TextEditingController();
+  TextEditingController nom = TextEditingController();
+  TextEditingController password = TextEditingController();
+  DateTime anniversaire = DateTime.now();
+
+
+
+  //Méthode
+  popHeure() async {
+    DateTime? picker = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1950,1,1),
+        lastDate: DateTime.now()
+    );
+    if(picker!=null){
+      anniversaire = picker!;
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +59,69 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   Widget BodyPage(){
-    return  Text("Page Inscription");
+    return  Column(
+      children: [
+        TextField(
+          controller: nom,
+          decoration: InputDecoration(
+            hintText: 'Entrer votre nom',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            )
+          ),
+        ),
+
+
+
+
+        TextField(
+          controller: prenom,
+          decoration: InputDecoration(
+              hintText: 'Entrer votre prénom',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              )
+          ),
+        ),
+
+
+        TextField(
+          controller: mail,
+          decoration: InputDecoration(
+              hintText: 'Entrer votre mail',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              )
+          ),
+
+
+        ),
+
+
+
+        TextField(
+          controller: password,
+          decoration: InputDecoration(
+              hintText: 'Entrer votre password',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              )
+          ),
+
+
+
+
+
+        ),
+
+        ElevatedButton.icon(
+            onPressed: (){
+              popHeure();
+            },
+            icon: const Icon(Icons.watch_later_sharp),
+            label: const Text('Heure')
+        )
+      ],
+    );
   }
 }
