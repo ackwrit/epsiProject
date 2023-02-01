@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projectepsi/Controller/Background_controller.dart';
 import 'package:projectepsi/Controller/MyAnimationController.dart';
 import 'package:projectepsi/View/dashboard_page.dart';
+import 'package:projectepsi/View/register_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -106,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                   shape: const StadiumBorder()
                 ),
                   onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const RegisterPage()));
 
                   },
                   child: const Text("Inscription")
