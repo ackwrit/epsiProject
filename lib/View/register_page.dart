@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectepsi/Controller/Background_controller.dart';
+import 'package:projectepsi/Controller/FirestoreHelper.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -28,7 +29,10 @@ class _RegisterPageState extends State<RegisterPage> {
         lastDate: DateTime.now()
     );
     if(picker!=null){
-      anniversaire = picker!;
+      setState((){
+        anniversaire = picker!;
+      });
+
     }
   }
 
@@ -47,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           const BackgroundController(),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 40,left: 10,right: 10),
             child: Center(
                 child: BodyPage()
             ),
@@ -60,16 +64,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget BodyPage(){
     return  Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextField(
           controller: nom,
           decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
             hintText: 'Entrer votre nom',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             )
           ),
         ),
+        const SizedBox(height: 5,),
 
 
 
@@ -78,16 +86,21 @@ class _RegisterPageState extends State<RegisterPage> {
           controller: prenom,
           decoration: InputDecoration(
               hintText: 'Entrer votre prénom',
+              fillColor: Colors.white,
+              filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               )
           ),
         ),
+        const SizedBox(height: 5,),
 
 
         TextField(
           controller: mail,
           decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
               hintText: 'Entrer votre mail',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -96,12 +109,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
         ),
+        const SizedBox(height: 5,),
 
 
 
         TextField(
           controller: password,
           decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
               hintText: 'Entrer votre password',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -113,6 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
         ),
+        const SizedBox(height: 5,),
 
         ElevatedButton.icon(
             onPressed: (){
@@ -120,7 +137,19 @@ class _RegisterPageState extends State<RegisterPage> {
             },
             icon: const Icon(Icons.watch_later_sharp),
             label: const Text('Heure')
-        )
+        ),
+        
+        Text("${anniversaire.day}/${anniversaire.month}/${anniversaire.year}"),
+
+
+        const SizedBox(height: 5,),
+
+        ElevatedButton(
+            onPressed: (){
+
+            },
+            child: const Text("Validation")
+        ),
       ],
     );
   }
