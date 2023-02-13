@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectepsi/Controller/Background_controller.dart';
+import 'package:projectepsi/View/image_ml.dart';
 class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
 
@@ -8,6 +9,17 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
+
+  int indexCurrent = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _pageController = PageController();
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +40,37 @@ class _DashBoardState extends State<DashBoard> {
           )
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: indexCurrent,
+        onTap: (newValue){
+          setState(() {
+            indexCurrent = newValue;
+            _pageController.jumpToPage(newValue);
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.label),label: "Traduction"),
+          BottomNavigationBarItem(icon: Icon(Icons.library_add_outlined),label: "Image"),
+        ],
+      ),
     );
   }
 
   Widget bodyPage(){
-    return const Text("coucou");
+
+    return PageView(
+      onPageChanged: (newValue){
+        setState(() {
+          _pageController.jumpToPage(newValue);
+          indexCurrent = newValue;
+        });
+
+      },
+      controller: _pageController,
+      children: const [
+        Text("Affichage traduction"),
+        ImageViewML()
+      ],
+    );
   }
 }

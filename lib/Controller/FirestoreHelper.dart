@@ -53,6 +53,23 @@ class FirestoreHelper {
       return getUtilisateur(uid!);
   }
 
+  //delete donnée user
+  deleteUser() async {
+      String? uid = await auth.currentUser?.uid;
+      if (uid == null) return;
+      cloudFirestoreUser.doc(uid!).delete();
+  }
+
+
+
+  //Suppression du compe utilisateur
+  destroyUser() async {
+      deleteUser();
+      User? user = await auth.currentUser;
+      if(user == null) return;
+      user.delete();
+  }
+
 
 
 

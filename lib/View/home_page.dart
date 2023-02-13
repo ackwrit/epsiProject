@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projectepsi/Controller/Background_controller.dart';
+import 'package:projectepsi/Controller/FirestoreHelper.dart';
 import 'package:projectepsi/Controller/MyAnimationController.dart';
+import 'package:projectepsi/Global/library.dart';
 import 'package:projectepsi/View/dashboard_page.dart';
 import 'package:projectepsi/View/register_page.dart';
 
@@ -16,6 +21,47 @@ class _HomePageState extends State<HomePage> {
 
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+
+
+
+  PopError(String message){
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context){
+          if(Platform.isIOS){
+            return CupertinoAlertDialog(
+              title: const Text("Erreur"),
+              content: Text(message),
+              actions: [
+                TextButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: const Text("OK")
+                )
+              ],
+            );
+          }
+          else
+          {
+            return AlertDialog(
+              title: const Text("Erreur"),
+              content: Text(message),
+              actions: [
+                TextButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: const Text("OK")
+                )
+              ],
+            );
+          }
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +166,15 @@ class _HomePageState extends State<HomePage> {
                       shape: const StadiumBorder()
                   ),
                   onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DashBoard()));
+                    FirestoreHelper().connexion(mailController.text, passwordController.text).then((value){
+                      setState(() {
+                        myUtilisateur = value;
+                      });
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const DashBoard()));
+                    }).catchError((onError){
+                       PopError("Erreur de saisie pour le mail/ou le mot de passe");
+                    });
+
 
 
                   },

@@ -27,6 +27,7 @@ class Utilisateur {
 
 
   //constructeur
+
   Utilisateur(DocumentSnapshot snapshot){
     id = snapshot.id;
     Map<String,dynamic> map = snapshot.data() as Map<String,dynamic>;
@@ -46,6 +47,26 @@ class Utilisateur {
 
 }
 
+Utilisateur.empty(){
+  id="";
+  String mail="";
+  nom="";
+  prenom="";
+  birthday= DateTime.now();
+  avatar = defautImage;
+  sexe = Genre.nonBinaire;
+}
+
 
   //méthode
+
+  Genre? getGenre(String genre){
+    switch(genre){
+      case "Femme" : return Genre.femme;
+      case "Homme" : return Genre.homme;
+      case "Non binaire" : return Genre.nonBinaire;
+      default : break;
+
+    }
+  }
 }

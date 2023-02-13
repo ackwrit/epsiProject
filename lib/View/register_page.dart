@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projectepsi/Controller/Background_controller.dart';
 import 'package:projectepsi/Controller/FirestoreHelper.dart';
+import 'package:projectepsi/Global/library.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -22,7 +25,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   //Méthode
   popHeure() async {
+
     DateTime? picker = await showDatePicker(
+
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(1950,1,1),
@@ -34,6 +39,44 @@ class _RegisterPageState extends State<RegisterPage> {
       });
 
     }
+  }
+
+  PopError(String message){
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (context){
+          if(Platform.isIOS){
+            return CupertinoAlertDialog(
+              title: const Text("Erreur"),
+              content: Text(message),
+              actions: [
+                TextButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: const Text("OK")
+                )
+              ],
+            );
+          }
+          else
+            {
+              return AlertDialog(
+                title: const Text("Erreur"),
+                content: Text(message),
+                actions: [
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      child: const Text("OK")
+                  )
+                ],
+              );
+            }
+        }
+    );
   }
 
 
@@ -146,7 +189,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
         ElevatedButton(
             onPressed: (){
-
+                //Appel de la création d'un utilisateur
+              FirestoreHelper().inscription(mail: mail.text, password: password.text, nom: nom.text, prenom: prenom.text, birthday: anniversaire).then((value){
+                      setState(() {
+                        myUtilisateur = value;
+                      });
+              }).catchError((onError){
+                PopError("Le compte n'a pu être crée");
+              });
             },
             child: const Text("Validation")
         ),
