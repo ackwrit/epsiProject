@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:projectepsi/Controller/Background_controller.dart';
 import 'package:projectepsi/Controller/FirestoreHelper.dart';
 import 'package:projectepsi/Global/library.dart';
+import 'package:projectepsi/View/dashboard_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -194,6 +195,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       setState(() {
                         myUtilisateur = value;
                       });
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context){
+                            return const DashBoard();
+                          }
+                      ));
               }).catchError((onError){
                 PopError("Le compte n'a pu être crée");
               });
