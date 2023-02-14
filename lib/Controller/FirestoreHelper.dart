@@ -19,20 +19,17 @@ class FirestoreHelper {
     Future <Utilisateur> inscription({required String mail , required String password , required String nom , required String prenom, required DateTime birthday}) async {
       UserCredential credential = await auth.createUserWithEmailAndPassword(email: mail, password: password);
       String? uid = credential.user?.uid;
-      if( uid == null){
-        return Future.error((error){
-          //Création d'un POP UP
-          Text(error.toString());
-        });
-      }
+
       Map<String,dynamic> map = {
-        "MAIL" : mail,
-        "NOM" : nom,
-        "PRENOM" : prenom,
-        "BIRTHDAY" : birthday,
-      };
-      addUser(uid!,map);
-      return getUtilisateur(uid!);
+            "MAIL" : mail,
+            "NOM" : nom,
+            "PRENOM" : prenom,
+            "BIRTHDAY" : birthday,
+          };
+          addUser(uid!,map);
+          return getUtilisateur(uid!);
+
+
 
 
 
@@ -44,12 +41,10 @@ class FirestoreHelper {
   Future <Utilisateur> connexion(String mail, String password) async {
       UserCredential credential = await auth.signInWithEmailAndPassword(email: mail, password: password);
       String? uid = credential.user?.uid;
-      if(uid == null) {
-        return Future.error((error){
-          Text(error.toString());
-        });
-      }
-      return getUtilisateur(uid!);
+
+          return getUtilisateur(uid!);
+
+
   }
 
   //delete donnée user

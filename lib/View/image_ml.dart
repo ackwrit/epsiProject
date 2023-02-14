@@ -27,7 +27,6 @@ class _ImageViewMLState extends State<ImageViewML> {
     if(pickerImage != null){
       setState((){
         sizeImage = pickerImage.files.first.size;
-        print(sizeImage!);
         pathImage = pickerImage.files.first.name;
         imageFile = pickerImage.files.first.bytes;
       });
